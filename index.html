@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Console</title>
+        <link rel="stylesheet" href="jquery.terminal.min.css"/>
+    </head>
+    <body>
+        <script src="jquery-3.3.1.min.js"></script>
+        <script src="jquery.terminal.min.js"></script>
+        <script>
+            var r1 = '[[;red;black]';
+            var r2 = ']';
+            var y1 = '[[;yellow;black]';
+            var y2 = ']';
+            $('body').terminal({
+                help: function() {
+                    this.echo('Type [help] to show this again,\n[diag] for diagnostics,\n[dir] to see the current directory,\n[cd] to see the current directory,\n\t[cd {/}] to navigate,\n\t[cd {file}] to check if it exists,\n[filename(.prg)] to run a file,\n\t[filename] to perform the first action available to a local command or file,\n\t[filename(.prg) -o] for options.');
+                },
+                cd: function(path) {
+                    if(path[0] === "/") {
+                        if(path[1] != null) { 
+                            this.echo('Changed to /root' + path);
+                        }
+                        else {
+                            this.echo(y1 + '[Warning] No directory changes have been performed. Current directory: /root' + y2);
+                        }
+                    }
+                    else {
+                        if(path[8] === ".") {
+                            this.echo(r1 + 'No files exist.' + r2);
+                        }
+                        else if (path[7] === "." || path[6] === "." || path[5] === "." || path[4] === "." || path[3] === "." || path[2] === "." || path[1] === ".") {
+                            this.echo(r1 + 'Files must be 8x3, i.e. using an 8-character name and a 3-character extension.' + r2);
+                        }
+                        else if(path[0] === ".") {
+                            this.echo('Files cannot begin with a period.');
+                        }
+                        else {
+                            this.echo(r1 + 'Syntax error, expected / at beginning of dir' + r2);
+                        }
+                    }
+                },
+                dir: function() {
+                    this.echo('/root');
+                },
+                virus000: function() {
+                    this.echo('Well, well, well... you want a virus?\nAre you sure?\nWell, since you already typed "virus000", I suppose you are inevitable. Here we go...');
+                    for (let i = 0; i < 10000; i++) {
+                        this.echo('error code ' + (i+7)).delay(100);
+                    }
+                },
+                println: function(input) {
+                    this.echo(input);
+                }
+            }, {
+                greetings: 'Welcome to the Macro Terminal, version 0.0.0001.\nType help for help.'
+            });
+        </script>
+    </body>
+</html>
