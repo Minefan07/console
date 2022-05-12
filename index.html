@@ -12,10 +12,36 @@
             var r2 = ']';
             var y1 = '[[;yellow;black]';
             var y2 = ']';
+            var syn = '&#91;Syntax&#93;';
+            var maplelef = new Audio("maple leaf rag.mp3");
+            var entertai = new Audio("the entertainer.mp3")
             $('body').terminal({
+                /*
                 help: function() {
                     this.echo('Type [help] to show this again,\n[diag] for diagnostics,\n[dir] to see the current directory,\n[cd] to see the current directory,\n\t[cd {/}] to navigate,\n\t[cd {file}] to check if it exists,\n[filename(.prg)] to run a file,\n\t[filename] to perform the first action available to a local command or file,\n\t[filename(.prg) -o] for options.');
                 },
+                */
+                help: function(name) {
+                    if (!name) this.echo("Type [help] to show this again,\n[diag] for diagnostics,\n[dir] to see the current directory,\n[cd] to see the current directory,\n\t[cd {/}] to navigate,\n\t[cd {file}] to check if it exists,\n[filename(.prg)] to run a file,\n\t[filename] to perform the first action available to a local command or file,\n\t[filename(.prg) -o] for options.\nFor more information on a specific command, type help 'command-name'.");
+                    else switch (name) {
+                        default:
+                            this.error("Unknown flag or command: " + name);
+                            break;
+                        case "broadcast":
+                            this.echo("Broadcasts the message to all users.");
+                            break;
+                        case "connect":
+                            this.echo("Connects the terminal to server for chatting.");
+                            break;
+                        case "disconnect":
+                            this.echo("Disconnects the terminal from server.");
+                            break;
+                        case "help":
+                            this.echo("Provides full information for terminal commands.");
+                            break;
+                    }
+                },
+
                 cd: function(path) {
                     if(path[0] === "/") {
                         if(path[1] != null) { 
@@ -52,12 +78,39 @@
                 println: function(input) {
                     this.echo(input);
                 },
-                google: function(url) {
-                    this.echo('Sending to search query "' + url + '" using Google\n\n                                             ,,\n  [[;blue;black].g8&#39;&#39;&#39;&#39;bgd]                               `7MM\n[[;blue;black].dP&#39;      `M]                                 MM\n[[;blue;black]dm&#39;        `]   [[;red;black],pW&#39;Wq.]   [[;yellow;black],pW&#39;Wq.]   .P&#39;Ybmmm  MM  .gP&#39;Ya\n[[;blue;black]MM]            [[;red;black]6W     WB] [[;yellow;black]6W     WB] :MI  I8    MM ,M&#39;   Yb\n[[;blue;black]MM.     `7MMF&#39;][[;red;black]8M     M8] [[;yellow;black]8M     M8]  WmmmP&#39;    MM 8M&#39;&#39;&#39;&#39;&#39;&#39;\n[[;blue;black]`Mb       MM]  [[;red;black]YA.   ,A9] [[;yellow;black]YA.   ,A9] 8M         MM YM.    ,\n  [[;blue;black]`&#39;&#39;bmmmdPY]   [[;red;black]`Ybmd9&#39;]   [[;yellow;black]`Ybmd9&#39;]   YMMMMMb .JMML.`Mbmmd&#39;\n                                  6&#39;     dP\n                                   Ybmmmd&#39;');
-                    //setTimeout(function(){window.location="dsflk";}, 3000);
+                google: function(option, url) {
+                    if (option === "-q") {
+                        this.echo('Sending to search query "' + url + '" using Google\n\n                                             [[;green;black],,]\n  [[;blue;black].g8&#39;&#39;&#39;&#39;bgd]                               [[;green;black]`7MM]\n[[;blue;black].dP&#39;      `M]                                 [[;green;black]MM]\n[[;blue;black]dm&#39;        `]   [[;red;black],pW&#39;Wq.]   [[;yellow;black],pW&#39;Wq.]   [[;blue;black].P&#39;Ybmmm]  [[;green;black]MM]  [[;red;black].gP&#39;Ya]\n[[;blue;black]MM]            [[;red;black]6W     WB] [[;yellow;black]6W     WB] [[;blue;black]:MI  I8]    [[;green;black]MM] [[;red;black],M&#39;   Yb]\n[[;blue;black]MM.     `7MMF&#39;][[;red;black]8M     M8] [[;yellow;black]8M     M8]  [[;blue;black]WmmmP&#39;]    [[;green;black]MM] [[;red;black]8M&#39;&#39;&#39;&#39;&#39;&#39;]\n[[;blue;black]`Mb       MM]  [[;red;black]YA.   ,A9] [[;yellow;black]YA.   ,A9] [[;blue;black]8M]         [[;green;black]MM] [[;red;black]YM.    ,]\n  [[;blue;black]`&#39;&#39;bmmmdPY]   [[;red;black]`Ybmd9&#39;]   [[;yellow;black]`Ybmd9&#39;]   [[;blue;black]YMMMMMb] [[;green;black].JMML.][[;red;black]`Mbmmd&#39;]\n                                  [[;blue;black]6&#39;     dP]\n       [[;white;black]R E M A S T E R E D]         [[;blue;black]Ybmmmd&#39;]');
+                        this.echo('\n\t   STARTING...');
+                        this.echo('\t   LOADING RESOURCES - USING QUERY "' + url + '"');
+                        this.echo('\t   COMPLETE!')
+                        setTimeout(function(){window.open('https://www.google.com/search?q=' + url);}, 5000);
+                    }
+                    else if (option === "-p") {
+                        this.echo('Pinging not yet available, coming soon.');
+                    } 
+                    else {
+                        this.echo('[[;red;black]' + syn + ' Invalid option.] Available options: \n\t[-q] for a query,\n\t[-p] to ping google to see if it is online');
+                    }
+                },
+                MAPLELEF: function() {
+                    this.echo('Playing "Maple Leaf Rag"');
+                    entertai.pause();
+                    maplelef.pause();
+                    entertai.currentTime = 0;
+                    maplelef.currentTime = 0;
+                    maplelef.play();
+                },
+                ENTERTAI: function() {
+                    this.echo('Playing "The Entertainer"');
+                    entertai.pause();
+                    maplelef.pause();
+                    entertai.currentTime = 0;
+                    maplelef.currentTime = 0;
+                    entertai.play();
                 }
             }, {
-                greetings: 'Welcome to the Macro Terminal, version 0.0.0001.\nType help for help.'
+                checkArity:false, greetings: 'Welcome to the Macro Terminal, version 0.0.0001.\nType help for help.'
             });
         </script>
     </body>
